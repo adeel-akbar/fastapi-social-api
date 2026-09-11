@@ -20,13 +20,13 @@ def login(
     db_user = db.execute(select(models.User).where(models.User.email == user.username)).scalar_one_or_none()
     if not db_user:
         raise HTTPException(
-            status_code = status.HTTP_404_NOT_FOUND,
-            detail = "User not found"
+            status_code = status.HTTP_401_UNAUTHORIZED,
+            detail = "Invalid Credentials"
         )
     if not verify_password(user.password, db_user.password):
         raise HTTPException(
-            status_code = status.HTTP_404_NOT_FOUND,
-            detail = "User not found"
+            status_code = status.HTTP_401_UNAUTHORIZED,
+            detail = "Invalid Credentials"
         )
     token = create_token({"data": db_user.id})
     return {"token": token, "token_type": "bearer"}
