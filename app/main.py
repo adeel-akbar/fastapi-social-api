@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select
 
 from . import models, schemas
+from .utilis import hash_password
 from .database import engine, get_db
 
 app = FastAPI()
@@ -88,3 +89,20 @@ def update_post(
     db.commit()
     db.refresh(the_post)
     return the_post
+
+@app.post(
+    "/users",
+    response_model = schemas.UserResponse,
+    status_code = status.HTTP_201_CREATED
+)
+def create_user(
+    user: schemas.UserCreate,
+    db: Session = Depends(get_db)
+):
+    hashed_password = hash_password(user.password)
+    user.password = hashed_password
+    new_user = models.User(**user.model_dump())
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return new_user
