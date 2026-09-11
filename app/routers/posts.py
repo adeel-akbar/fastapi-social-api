@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from .. import models, schemas
 from ..database import get_db
+from .token import get_user
 
 router = APIRouter(
     prefix = "/posts",
@@ -17,7 +18,8 @@ router = APIRouter(
 )
 def create_post(
     post: schemas.PostCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_user)
 ):
     new_post = models.Post(**post.model_dump())
     db.add(new_post)
