@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from . import models
 from .database import engine
-from .routers import posts, users, auth
+from .routers import auth, posts, users
 
 app = FastAPI()
 models.Base.metadata.create_all(bind = engine)

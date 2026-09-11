@@ -32,7 +32,8 @@ def create_post(
     response_model = list[schemas.PostResponse]
 )
 def get_posts(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_user)
 ):
     result = db.execute(select(models.Post))
     posts = result.scalars().all()
@@ -44,7 +45,8 @@ def get_posts(
 )
 def get_post(
     post_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_user)
 ):
     post = db.execute(select(models.Post).where(models.Post.id == post_id)).scalar_one_or_none()
     if not post: 
@@ -60,7 +62,8 @@ def get_post(
 )
 def delete_post(
     post_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_user)
 ):
     post = db.execute(select(models.Post).where(models.Post.id == post_id)).scalar_one_or_none()
     if not post:
@@ -79,7 +82,8 @@ def delete_post(
 def update_post(
     post_id: int,
     post: schemas.PostCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_user)
 ):
     the_post = db.execute(select(models.Post).where(models.Post.id == post_id)).scalar_one_or_none()
     if not the_post:
