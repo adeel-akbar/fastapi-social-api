@@ -1,21 +1,19 @@
-import os
 from datetime import datetime, timedelta, timezone
 
 import jwt
-from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jwt import PyJWTError
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from .. import models
-from ..database import get_db
+from app import models
+from app.config import settings
+from app.database import get_db
 
-load_dotenv()
-SECRET_KEY = os.getenv("KEY")
-ALGORITHM = "HS256"
-token_expiration_time = 12
+SECRET_KEY = settings.KEY
+ALGORITHM = settings.ALGORITHM
+token_expiration_time = settings.TOKEN_EXPIRY_TIME
 oauth_scheme = OAuth2PasswordBearer(tokenUrl = "login")
 
 def create_token(payload: dict):
@@ -25,7 +23,7 @@ def create_token(payload: dict):
     token = jwt.encode(copy_of_payload, SECRET_KEY, algorithm = ALGORITHM)
     return token
 
-def get_user(token: str = Depends(oauth_scheme), db: Session = Depends(get_db)):
+def get_user(token: str = Depends(oauth_scheme), db: Session = Depends(get_db)):  # noqa: B008
     user_credentials = HTTPException(
         status_code = status.HTTP_401_UNAUTHORIZED,
         detail = "Invalid Credentials", 
