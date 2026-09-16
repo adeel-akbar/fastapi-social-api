@@ -27,3 +27,10 @@ class User(Base):
     password: Mapped[str] = mapped_column(nullable = False)
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone = True),
            server_default = func.now(), nullable = False)
+
+class Like(Base):
+    __tablename__ = "likes"
+    post_id: Mapped[int] = mapped_column(ForeignKey("posts.id", ondelete = "CASCADE"), 
+                                         nullable = False, primary_key = True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete = "CASCADE"), 
+                                         nullable = False, primary_key = True)

@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import IntEnum
 
 from pydantic import BaseModel, ConfigDict, EmailStr
 
@@ -10,6 +11,7 @@ class PostCreate(BaseModel):
 
 class Owner(BaseModel):
     email: EmailStr
+
 class PostResponse(PostCreate):
     id: int
     created_at: datetime
@@ -17,6 +19,10 @@ class PostResponse(PostCreate):
     owner: Owner
 
     model_config = ConfigDict(from_attributes = True)
+
+class PostWithVote(BaseModel):
+    Post: PostResponse
+    likes: int
 
 class UserCreate(BaseModel):
     email: EmailStr
@@ -29,3 +35,11 @@ class UserResponse(BaseModel):
     created_at: datetime
 
     model_config = ConfigDict(from_attributes = True)
+
+class LikeDir(IntEnum):
+    down = 0
+    up = 1
+
+class Like(BaseModel):
+    post_id: int
+    dir: LikeDir
