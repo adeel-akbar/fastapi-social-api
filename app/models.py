@@ -34,3 +34,18 @@ class Like(Base):
                                          nullable = False, primary_key = True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete = "CASCADE"), 
                                          nullable = False, primary_key = True)
+
+class Comment(Base):
+    __tablename__ = "comments"
+    id: Mapped[int] = mapped_column(primary_key = True, 
+                nullable = False)
+    content: Mapped[str] = mapped_column(nullable = False)
+    created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone = True),
+            nullable = False, server_default = func.now())
+    owner_id: Mapped[int] = mapped_column(ForeignKey("users.id", 
+                ondelete = "CASCADE"), nullable = False)
+    post_id: Mapped[int] = mapped_column(ForeignKey("posts.id", ondelete = "CASCADE"),
+                            nullable = False)
+    owner: Mapped["User"] = relationship()
+    post: Mapped["Post"] = relationship()
+    

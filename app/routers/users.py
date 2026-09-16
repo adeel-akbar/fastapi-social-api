@@ -10,7 +10,7 @@ from .token import get_user
 
 router = APIRouter(
     prefix = "/users", 
-    tags = ["users"])
+    tags = ["Users"])
 
 @router.post("/",
     response_model = schemas.UserResponse,

@@ -43,3 +43,22 @@ class LikeDir(IntEnum):
 class Like(BaseModel):
     post_id: int
     dir: LikeDir
+
+class Comment(BaseModel):
+    content: str
+
+
+class OwnerofComment(BaseModel):
+    email: EmailStr
+
+class PostComment(BaseModel):
+    title: str
+    content: str
+
+class CommentResponse(Comment):
+    id: int
+    created_at: datetime
+    owner_id: int
+    post_id: int
+    owner: OwnerofComment
+    post: PostComment

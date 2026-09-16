@@ -9,10 +9,10 @@ from .token import get_user
 
 router = APIRouter(
     prefix = "/likes",
-    tags = ["likes"]
+    tags = ["Likes"]
 )
 
-@router.post("/")
+@router.post("/", status_code = status.HTTP_201_CREATED)
 def add_like(like: schemas.Like,
          db: Session = Depends(get_db),  # noqa: B008
          current_user: models.User = Depends(get_user)):  # noqa: B008
