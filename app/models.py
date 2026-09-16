@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from sqlalchemy import TIMESTAMP, func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import TIMESTAMP, ForeignKey, func
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .database import Base
 
@@ -15,6 +15,9 @@ class Post(Base):
         nullable = False)
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone = True),
            server_default = func.now(), nullable = False)
+    owner_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete = "CASCADE"),
+                    nullable = False)
+    owner: Mapped["User"] = relationship()
     
 
 class User(Base):
