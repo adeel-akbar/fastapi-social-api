@@ -10,11 +10,21 @@
     {
       "name": "Create post",
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
         "method": "POST",
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"title\": \"Social media api\",\r\n    \"content\": \"Second post of social media api project's first post\"\r\n}",
+          "raw": "{\r\n    \"title\": \"Social media api\",\r\n    \"content\": \"Social media api project's first post\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -186,6 +196,171 @@
           "raw": "{{URL}}users",
           "host": [
             "{{URL}}users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Like",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add comment",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{JWT}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"content\": \"nice post\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{URL}}comments/3",
+          "host": [
+            "{{URL}}comments"
+          ],
+          "path": [
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET comments",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{JWT}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}comments/2",
+          "host": [
+            "{{URL}}comments"
+          ],
+          "path": [
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET comment",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{JWT}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}comments/single/1",
+          "host": [
+            "{{URL}}comments"
+          ],
+          "path": [
+            "single",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update comment",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{JWT}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"content\": \"Updated \"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{URL}}comments/2",
+          "host": [
+            "{{URL}}comments"
+          ],
+          "path": [
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete comment",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{JWT}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}comments/1",
+          "host": [
+            "{{URL}}comments"
+          ],
+          "path": [
+            "1"
           ]
         }
       },
