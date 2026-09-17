@@ -19,11 +19,12 @@ class PostResponse(PostCreate):
     owner: Owner
 
     model_config = ConfigDict(from_attributes = True)
-
 class PostWithVote(BaseModel):
     Post: PostResponse
     likes: int
+    comments: int
 
+    model_config = ConfigDict(from_attributes = True)
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
