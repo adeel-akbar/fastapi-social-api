@@ -14,8 +14,8 @@ router = APIRouter(
 
 @router.post("/login")
 def login(
-    user: OAuth2PasswordRequestForm = Depends(),
-    db: Session = Depends(get_db)
+    user: OAuth2PasswordRequestForm = Depends(),  # noqa: B008
+    db: Session = Depends(get_db)  # noqa: B008
 ):
     db_user = db.execute(select(models.User).where(models.User.email == user.username)).scalar_one_or_none()
     if not db_user:
@@ -29,4 +29,4 @@ def login(
             detail = "Invalid Credentials"
         )
     token = create_token({"data": db_user.id})
-    return {"token": token, "token_type": "bearer"}
+    return {"access_token": token, "token_type": "bearer"}
